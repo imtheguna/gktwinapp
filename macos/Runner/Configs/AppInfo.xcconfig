@@ -1,0 +1,14 @@
+
+
+
+
+
+
+
+PRODUCT_NAME = twin_apps
+
+
+PRODUCT_BUNDLE_IDENTIFIER = com.example.twinApps
+
+
+PRODUCT_COPYRIGHT = Copyright © 2022 com.example. All rights reserved.
