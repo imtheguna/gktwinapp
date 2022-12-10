@@ -38,11 +38,11 @@ class _MyCardState extends State<MyCard> {
                 ? EdgeInsets.only(
                     top: i % 2 == 0 ? 12 : 0, bottom: i % 2 == 0 ? 0 : 12)
                 : EdgeInsets.all(0),
-            child: InkWell(
-              onTap: (() => widget.onTapped(widget.store.appDetails[i + 1]!)),
-              child: Card(
-                elevation: 10,
-                shadowColor: Color.fromARGB(255, 97, 100, 101),
+            child: Card(
+              elevation: 10,
+              shadowColor: Color.fromARGB(255, 97, 100, 101),
+              child: InkWell(
+                onTap: (() => widget.onTapped(widget.store.appDetails[i + 1]!)),
                 child: Container(
                   //  duration: Duration(milliseconds: 500),
                   height: 1 == i ? 400 : 290,

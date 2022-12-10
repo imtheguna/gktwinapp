@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/material.dart';
 import 'package:twin_apps/controller/firebaseMag.dart';
 import 'package:twin_apps/models/appdetailmodels.dart';
@@ -9,6 +7,7 @@ import 'package:twin_apps/pages/WebIntro.dart';
 import 'package:twin_apps/pages/applist.dart';
 import 'package:twin_apps/pages/contact.dart';
 import 'package:twin_apps/pages/devdetails.dart';
+import 'package:twin_apps/pages/mypack.dart';
 import 'package:twin_apps/widgets/applistmoblie.dart';
 import 'package:twin_apps/widgets/webapplist.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -81,13 +80,24 @@ class _AppsState extends State<Apps> {
                       )
                 : Container(),
             const SizedBox(
-              height: 30,
+              height: 15,
             ),
+            if (width < 1000)
+              MyPackages(
+                width: width,
+                isweb: false,
+              ),
             const DevDetailsPage(),
             const SizedBox(
               height: 20,
             ),
-            const ContactPage()
+            width > 1000
+                ? ContactPageWeb(
+                    store: widget.store,
+                  )
+                : ContactPageMobile(
+                    store: widget.store,
+                  ),
           ],
         ),
       ),

@@ -10,6 +10,7 @@ class AppStore extends VxStore {
   Map<String, DevDetails> devDetails = {};
   Map<int, String> sizelist = {};
   int srcIndex = 0;
+  int selectSev = 0;
   bool showall = false;
   // List<AppDetail> appDetails = [];
   String ProVideoLink =
@@ -23,6 +24,16 @@ class SrcShow extends VxMutation<AppStore> {
   @override
   perform() {
     store!.showall = showall;
+  }
+}
+
+class SelectSev extends VxMutation<AppStore> {
+  final int selectSev;
+  final AppStore store;
+  SelectSev(this.selectSev, this.store);
+  @override
+  perform() {
+    store.selectSev = selectSev;
   }
 }
 

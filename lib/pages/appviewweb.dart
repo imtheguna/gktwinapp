@@ -486,7 +486,7 @@ class _GalleryPhotoViewWrapperState extends State<GalleryPhotoViewWrapper> {
                     width: 70,
                     height: 40,
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(0.0),
                       child: TextButton(
                           child: const Text(
                             'Back',
