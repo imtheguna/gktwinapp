@@ -71,9 +71,9 @@ class ContactPageMobile extends StatelessWidget {
                       height: 60,
                       child: TextField(
                         // autofocus: false,
-                        maxLines: 1,
+                        //maxLines: 1,
                         //focusNode: fn,
-                        controller: namecontroller,
+                        //controller: namecontroller,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: const Color.fromARGB(31, 178, 178, 178),
@@ -136,113 +136,55 @@ class ContactPageMobile extends StatelessWidget {
                 //   maxline: 1,
                 //   height: 100,
                 // ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text("Your Name"),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      height: 60,
-                      child: TextField(
-                        // autofocus: false,
-                        maxLines: 1,
-                        //focusNode: fn,
-                        controller: namecontroller,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: const Color.fromARGB(31, 178, 178, 178),
-                          hintText: "Your Name",
-                          contentPadding: const EdgeInsets.only(
-                              left: 14.0, bottom: 8.0, top: 8.0),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(7.7),
-                          ),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(7.7),
-                          ),
-                        ),
-                        // validator: (value) {
-                        //   if (widget.text == "Email") {
-                        //     final bool emailValid = RegExp(
-                        //             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                        //         .hasMatch(value!);
-                        //     if (!emailValid) return "Invalid Email";
-                        //     return null;
-                        //   }
-                        //   if (widget.text == 'Phone Number') {
-                        //     final bool emailValid =
-                        //         RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)').hasMatch(value!);
-                        //     if (!emailValid) return "Invalid Number";
-                        //     return null;
-                        //   }
-                        //   if (value!.isEmpty) {
-                        //     return '${widget.text} empty';
-                        //   } else if (value.length < 3) {
-                        //     return '${widget.text} short';
-                        //   }
 
-                        //   return null;
-                        // },
-                      ),
-                    ),
-                  ],
-                ),
-                Container(
-                  height: 300,
-                  //width: ((width * 0.43) / 2) - 12,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text("Message"),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        height: 250,
-                        child: TextField(
-                          maxLines: 12,
-                          controller: msgcontroller,
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: const Color.fromARGB(31, 178, 178, 178),
-                            hintText: "Message",
-                            contentPadding: const EdgeInsets.only(
-                                left: 14.0, bottom: 8.0, top: 8.0),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(color: Colors.white),
-                              borderRadius: BorderRadius.circular(7.7),
-                            ),
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                              borderRadius: BorderRadius.circular(7.7),
-                            ),
-                          ),
-                          // validator: (value) {
-                          //   if (value!.isEmpty) {
-                          //     return 'Message empty';
-                          //   } else if (value.length < 10) {
-                          //     return 'Message short';
-                          //   }
+                // Container(
+                //   height: 300,
+                //   //width: ((width * 0.43) / 2) - 12,
+                //   child: Column(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     mainAxisAlignment: MainAxisAlignment.start,
+                //     children: [
+                //       const SizedBox(
+                //         height: 10,
+                //       ),
+                //       Text("Message"),
+                //       const SizedBox(
+                //         height: 10,
+                //       ),
+                //       Container(
+                //         height: 250,
+                //         child: TextField(
+                //           maxLines: 12,
+                //           controller: msgcontroller,
+                //           decoration: InputDecoration(
+                //             filled: true,
+                //             fillColor: const Color.fromARGB(31, 178, 178, 178),
+                //             hintText: "Message",
+                //             contentPadding: const EdgeInsets.only(
+                //                 left: 14.0, bottom: 8.0, top: 8.0),
+                //             focusedBorder: OutlineInputBorder(
+                //               borderSide: const BorderSide(color: Colors.white),
+                //               borderRadius: BorderRadius.circular(7.7),
+                //             ),
+                //             enabledBorder: UnderlineInputBorder(
+                //               borderSide: BorderSide(color: Colors.white),
+                //               borderRadius: BorderRadius.circular(7.7),
+                //             ),
+                //           ),
+                //           // validator: (value) {
+                //           //   if (value!.isEmpty) {
+                //           //     return 'Message empty';
+                //           //   } else if (value.length < 10) {
+                //           //     return 'Message short';
+                //           //   }
 
-                          //   return null;
-                          // },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                //           //   return null;
+                //           // },
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 SizedBox(
                   width: width,
                   child: const Text("Services",
