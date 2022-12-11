@@ -512,13 +512,12 @@ class ContactPageWeb extends StatelessWidget {
   }
 }
 
-class MyInput extends StatelessWidget {
+class MyInput extends StatefulWidget {
   final String text;
   final int maxline;
   final double height;
   final double textHeight;
   final TextEditingController? controller;
-
   const MyInput(
       {super.key,
       required this.text,
@@ -528,9 +527,22 @@ class MyInput extends StatelessWidget {
       required this.textHeight});
 
   @override
+  State<MyInput> createState() => _MyInputState();
+}
+
+class _MyInputState extends State<MyInput> {
+  final fn = FocusNode();
+  // void initState() {
+  //   Future.delayed(const Duration(milliseconds: 200)).then((_) {
+  //     FocusScope.of(context).requestFocus(fn);
+  //   });
+  //   super.initState();
+  // }
+
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: height,
+      height: widget.height,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -538,19 +550,21 @@ class MyInput extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          Text(text),
+          Text(widget.text),
           const SizedBox(
             height: 10,
           ),
           Container(
-            height: textHeight,
-            child: TextFormField(
-              maxLines: maxline,
-              controller: controller,
+            height: widget.textHeight,
+            child: TextField(
+              // autofocus: false,
+              maxLines: widget.maxline,
+              focusNode: fn,
+              controller: widget.controller,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: const Color.fromARGB(31, 178, 178, 178),
-                hintText: text,
+                hintText: widget.text,
                 contentPadding:
                     const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
                 focusedBorder: OutlineInputBorder(
@@ -562,28 +576,28 @@ class MyInput extends StatelessWidget {
                   borderRadius: BorderRadius.circular(7.7),
                 ),
               ),
-              validator: (value) {
-                if (text == "Email") {
-                  final bool emailValid = RegExp(
-                          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                      .hasMatch(value!);
-                  if (!emailValid) return "Invalid Email";
-                  return null;
-                }
-                if (text == 'Phone Number') {
-                  final bool emailValid =
-                      RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)').hasMatch(value!);
-                  if (!emailValid) return "Invalid Number";
-                  return null;
-                }
-                if (value!.isEmpty) {
-                  return '$text empty';
-                } else if (value.length < 3) {
-                  return '$text short';
-                }
+              // validator: (value) {
+              //   if (widget.text == "Email") {
+              //     final bool emailValid = RegExp(
+              //             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+              //         .hasMatch(value!);
+              //     if (!emailValid) return "Invalid Email";
+              //     return null;
+              //   }
+              //   if (widget.text == 'Phone Number') {
+              //     final bool emailValid =
+              //         RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)').hasMatch(value!);
+              //     if (!emailValid) return "Invalid Number";
+              //     return null;
+              //   }
+              //   if (value!.isEmpty) {
+              //     return '${widget.text} empty';
+              //   } else if (value.length < 3) {
+              //     return '${widget.text} short';
+              //   }
 
-                return null;
-              },
+              //   return null;
+              // },
             ),
           ),
         ],
