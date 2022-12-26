@@ -1,6 +1,6 @@
 // ignore: depend_on_referenced_packages
 import 'package:cloud_firestore/cloud_firestore.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:twin_apps/models/appdetailmodels.dart';
 import 'package:twin_apps/models/appstore.dart';
 import 'package:twin_apps/models/devdetails.dart';
@@ -9,6 +9,63 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:math';
 
 class FireStoreDataBase {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<void> signInAnonymously() async {
+    await _auth.signInAnonymously().then((result) {
+      final User? user = result.user;
+      //print(user);
+    });
+  }
+
+  Future<int> getCOunt({required int id}) async {
+    int currentCount = 0;
+    var document = await FirebaseFirestore.instance
+        .collection("download")
+        .doc(id.toString())
+        .get();
+    if (!document.exists) {
+      FirebaseFirestore.instance
+          .collection('download')
+          .doc(id.toString())
+          .set({"count": currentCount}, SetOptions(merge: true));
+    }
+    await FirebaseFirestore.instance
+        .collection("download")
+        .doc(id.toString())
+        .get()
+        .then((value) => currentCount = value.data()!['count']);
+
+    return currentCount;
+  }
+
+  updateDownCount({required int id}) async {
+    int currentCount = 0;
+    var document = await FirebaseFirestore.instance
+        .collection("download")
+        .doc(id.toString())
+        .get();
+    if (document.exists) {
+      await FirebaseFirestore.instance
+          .collection("download")
+          .doc(id.toString())
+          .get()
+          .then((value) => currentCount = value.data()!['count']);
+
+      FirebaseFirestore.instance
+          .collection('download')
+          .doc(id.toString())
+          .update({'count': currentCount + 1});
+    } else {
+      FirebaseFirestore.instance
+          .collection('download')
+          .doc(id.toString())
+          .set({"count": currentCount + 1}, SetOptions(merge: true));
+    }
+
+    print('Count Updated');
+  }
+
   getSize(Map<int, AppDetail> applist, AppStore store) async {
     final storageRef = FirebaseStorage.instance.ref();
     for (int i = 1; i < applist.length + 1; i++) {

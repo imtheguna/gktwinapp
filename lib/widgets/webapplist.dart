@@ -3,6 +3,7 @@ import 'package:twin_apps/models/appdetailmodels.dart';
 import 'package:twin_apps/models/appstore.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MyCard extends StatefulWidget {
   final AppStore store;
@@ -33,74 +34,88 @@ class _MyCardState extends State<MyCard> {
         itemBuilder: (ctx, i) {
           String tag = getTag(widget.store.appDetails[i + 1]!.tag);
           // print(tag);
-          return Padding(
-            padding: width > 800
-                ? EdgeInsets.only(
-                    top: i % 2 == 0 ? 12 : 0, bottom: i % 2 == 0 ? 0 : 12)
-                : EdgeInsets.all(0),
-            child: Card(
-              elevation: 10,
-              shadowColor: Color.fromARGB(255, 97, 100, 101),
-              child: InkWell(
-                onTap: (() => widget.onTapped(widget.store.appDetails[i + 1]!)),
-                child: Container(
-                  //  duration: Duration(milliseconds: 500),
-                  height: 1 == i ? 400 : 290,
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(50)),
-                  margin: EdgeInsets.all(5),
-                  padding: EdgeInsets.all(5),
-                  child: Stack(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+          return Stack(
+            children: [
+              Padding(
+                padding: width > 800
+                    ? EdgeInsets.only(
+                        top: i % 2 == 0 ? 12 : 0, bottom: i % 2 == 0 ? 0 : 12)
+                    : EdgeInsets.all(0),
+                child: Card(
+                  elevation: 10,
+                  shadowColor: Color.fromARGB(255, 97, 100, 101),
+                  child: InkWell(
+                    onTap: (() =>
+                        widget.onTapped(widget.store.appDetails[i + 1]!)),
+                    child: Container(
+                      //  duration: Duration(milliseconds: 500),
+                      height: 1 == i ? 400 : 290,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50)),
+                      margin: EdgeInsets.all(5),
+                      padding: EdgeInsets.all(5),
+                      child: Stack(
                         children: [
-                          Expanded(
-                              child: ExtendedImage.network(
-                            widget.store.appDetails[i + 1]!.logo,
-                            enableLoadState: true,
-                            fit: BoxFit.contain,
-                            cache: true,
-                            loadStateChanged: (ExtendedImageState state) {
-                              switch (state.extendedImageLoadState) {
-                                case LoadState.failed:
-                                  state.reLoadImage();
-                                  break;
-                                case LoadState.loading:
-                                  break;
-                                case LoadState.completed:
-                                  if (state.wasSynchronouslyLoaded) {
-                                    return state.completedWidget;
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Expanded(
+                                  child: ExtendedImage.network(
+                                widget.store.appDetails[i + 1]!.logo,
+                                enableLoadState: true,
+                                fit: BoxFit.contain,
+                                cache: true,
+                                loadStateChanged: (ExtendedImageState state) {
+                                  switch (state.extendedImageLoadState) {
+                                    case LoadState.failed:
+                                      state.reLoadImage();
+                                      break;
+                                    case LoadState.loading:
+                                      break;
+                                    case LoadState.completed:
+                                      if (state.wasSynchronouslyLoaded) {
+                                        return state.completedWidget;
+                                      }
+                                      break;
                                   }
-                                  break;
-                              }
-                            },
-                          )),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 5, top: 3),
-                            child: Text(
-                              widget.store.appDetails[i + 1]!.name,
-                              style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
-                                  overflow: TextOverflow.ellipsis),
-                            ),
-                          ),
-                          Text(
-                            widget.store.appDetails[i + 1]!.size,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black45,
-                              fontSize: 13,
-                            ),
+                                },
+                              )),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(right: 5, top: 3),
+                                child: Text(
+                                  widget.store.appDetails[i + 1]!.name,
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      overflow: TextOverflow.ellipsis),
+                                ),
+                              ),
+                              Text(
+                                widget.store.appDetails[i + 1]!.size,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black45,
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ),
-            ),
+              if (widget.store.appDetails[i + 1]!.source == 'play')
+                const Positioned(
+                    top: 30,
+                    left: 20,
+                    child: FaIcon(
+                      FontAwesomeIcons.googlePlay,
+                      color: Colors.black26,
+                    )),
+            ],
           );
         },
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

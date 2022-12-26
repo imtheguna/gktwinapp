@@ -34,238 +34,245 @@ class ContactPageMobile extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     final _formKey = GlobalKey<FormState>();
 
-    return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
-      child: Card(
-        elevation: 0,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            child: Form(
-              key: _formKey,
-              child:
-                  Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-                SizedBox(
-                  width: width,
-                  child: const Text('Contact Form',
-                      style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black54,
-                          fontWeight: FontWeight.w300)),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text("Your Name"),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Container(
-                      height: 60,
-                      child: TextField(
-                        // autofocus: false,
-                        //maxLines: 1,
-                        //focusNode: fn,
-                        //controller: namecontroller,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: const Color.fromARGB(31, 178, 178, 178),
-                          hintText: "Your Name",
-                          contentPadding: const EdgeInsets.only(
-                              left: 14.0, bottom: 8.0, top: 8.0),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(7.7),
-                          ),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(7.7),
-                          ),
-                        ),
-                        // validator: (value) {
-                        //   if (widget.text == "Email") {
-                        //     final bool emailValid = RegExp(
-                        //             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                        //         .hasMatch(value!);
-                        //     if (!emailValid) return "Invalid Email";
-                        //     return null;
-                        //   }
-                        //   if (widget.text == 'Phone Number') {
-                        //     final bool emailValid =
-                        //         RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)').hasMatch(value!);
-                        //     if (!emailValid) return "Invalid Number";
-                        //     return null;
-                        //   }
-                        //   if (value!.isEmpty) {
-                        //     return '${widget.text} empty';
-                        //   } else if (value.length < 3) {
-                        //     return '${widget.text} short';
-                        //   }
-
-                        //   return null;
-                        // },
-                      ),
-                    ),
-                  ],
-                ),
-                // MyInput(
-                //   textHeight: 60,
-                //   text: "Your Name",
-                //   controller: namecontroller,
-                //   maxline: 1,
-                //   height: 100,
-                // ),
-                // MyInput(
-                //   textHeight: 60,
-                //   text: 'Email',
-                //   controller: emailcontroller,
-                //   maxline: 1,
-                //   height: 100,
-                // ),
-                // MyInput(
-                //   textHeight: 60,
-                //   text: 'Phone Number',
-                //   controller: phonecontroller,
-                //   maxline: 1,
-                //   height: 100,
-                // ),
-
-                // Container(
-                //   height: 300,
-                //   //width: ((width * 0.43) / 2) - 12,
-                //   child: Column(
-                //     crossAxisAlignment: CrossAxisAlignment.start,
-                //     mainAxisAlignment: MainAxisAlignment.start,
-                //     children: [
-                //       const SizedBox(
-                //         height: 10,
-                //       ),
-                //       Text("Message"),
-                //       const SizedBox(
-                //         height: 10,
-                //       ),
-                //       Container(
-                //         height: 250,
-                //         child: TextField(
-                //           maxLines: 12,
-                //           controller: msgcontroller,
-                //           decoration: InputDecoration(
-                //             filled: true,
-                //             fillColor: const Color.fromARGB(31, 178, 178, 178),
-                //             hintText: "Message",
-                //             contentPadding: const EdgeInsets.only(
-                //                 left: 14.0, bottom: 8.0, top: 8.0),
-                //             focusedBorder: OutlineInputBorder(
-                //               borderSide: const BorderSide(color: Colors.white),
-                //               borderRadius: BorderRadius.circular(7.7),
-                //             ),
-                //             enabledBorder: UnderlineInputBorder(
-                //               borderSide: BorderSide(color: Colors.white),
-                //               borderRadius: BorderRadius.circular(7.7),
-                //             ),
-                //           ),
-                //           // validator: (value) {
-                //           //   if (value!.isEmpty) {
-                //           //     return 'Message empty';
-                //           //   } else if (value.length < 10) {
-                //           //     return 'Message short';
-                //           //   }
-
-                //           //   return null;
-                //           // },
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                SizedBox(
-                  width: width,
-                  child: const Text("Services",
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w300)),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                VxBuilder(
-                  mutations: {SelectSev},
-                  builder: (context, _, __) {
-                    return Container(
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+        child: Card(
+          elevation: 0,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(
                         width: width,
-                        height: 50,
-                        child: ListView.builder(
-                          itemCount: listofSev.length,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: ((context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: InkWell(
-                                onTap: (() => SelectSev(index, store)),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(6),
-                                    color: store.selectSev == index
-                                        ? Colors.white
-                                        : Color.fromARGB(31, 162, 162, 162),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: store.selectSev == index
-                                              ? Colors.blue
-                                              : Colors.transparent,
-                                          spreadRadius: 1),
-                                    ],
-                                  ),
-                                  height: 30,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      listofSev[index],
-                                      style:
-                                          const TextStyle(color: Colors.black),
-                                    ),
-                                  ),
+                        child: const Text('Contact Form',
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.black54,
+                                fontWeight: FontWeight.w300)),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text("Your Name"),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Container(
+                            height: 60,
+                            child: TextField(
+                              // autofocus: false,
+                              //maxLines: 1,
+                              //focusNode: fn,
+                              //controller: namecontroller,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor:
+                                    const Color.fromARGB(31, 178, 178, 178),
+                                hintText: "Your Name",
+                                contentPadding: const EdgeInsets.only(
+                                    left: 14.0, bottom: 8.0, top: 8.0),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      const BorderSide(color: Colors.white),
+                                  borderRadius: BorderRadius.circular(7.7),
+                                ),
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white),
+                                  borderRadius: BorderRadius.circular(7.7),
                                 ),
                               ),
-                            );
-                          }),
-                        ));
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Center(
-                    child: InkWell(
-                  onTap: (() {
-                    bool isvalidated = _formKey.currentState!.validate();
-                    if (isvalidated) {
-                      print(listofSev[store.selectSev]);
-                    }
-                  }),
-                  child: Container(
-                    height: 45,
-                    width: 200,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6),
-                      color: const Color.fromARGB(255, 255, 203, 125),
-                    ),
-                    child: const Center(
-                        child: Text(
-                      'Send Message',
-                      style: TextStyle(color: Colors.white),
-                    )),
-                  ),
-                ))
-              ]),
+                              // validator: (value) {
+                              //   if (widget.text == "Email") {
+                              //     final bool emailValid = RegExp(
+                              //             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                              //         .hasMatch(value!);
+                              //     if (!emailValid) return "Invalid Email";
+                              //     return null;
+                              //   }
+                              //   if (widget.text == 'Phone Number') {
+                              //     final bool emailValid =
+                              //         RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)').hasMatch(value!);
+                              //     if (!emailValid) return "Invalid Number";
+                              //     return null;
+                              //   }
+                              //   if (value!.isEmpty) {
+                              //     return '${widget.text} empty';
+                              //   } else if (value.length < 3) {
+                              //     return '${widget.text} short';
+                              //   }
+
+                              //   return null;
+                              // },
+                            ),
+                          ),
+                        ],
+                      ),
+                      // MyInput(
+                      //   textHeight: 60,
+                      //   text: "Your Name",
+                      //   controller: namecontroller,
+                      //   maxline: 1,
+                      //   height: 100,
+                      // ),
+                      // MyInput(
+                      //   textHeight: 60,
+                      //   text: 'Email',
+                      //   controller: emailcontroller,
+                      //   maxline: 1,
+                      //   height: 100,
+                      // ),
+                      // MyInput(
+                      //   textHeight: 60,
+                      //   text: 'Phone Number',
+                      //   controller: phonecontroller,
+                      //   maxline: 1,
+                      //   height: 100,
+                      // ),
+
+                      // Container(
+                      //   height: 300,
+                      //   //width: ((width * 0.43) / 2) - 12,
+                      //   child: Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     mainAxisAlignment: MainAxisAlignment.start,
+                      //     children: [
+                      //       const SizedBox(
+                      //         height: 10,
+                      //       ),
+                      //       Text("Message"),
+                      //       const SizedBox(
+                      //         height: 10,
+                      //       ),
+                      //       Container(
+                      //         height: 250,
+                      //         child: TextField(
+                      //           maxLines: 12,
+                      //           controller: msgcontroller,
+                      //           decoration: InputDecoration(
+                      //             filled: true,
+                      //             fillColor: const Color.fromARGB(31, 178, 178, 178),
+                      //             hintText: "Message",
+                      //             contentPadding: const EdgeInsets.only(
+                      //                 left: 14.0, bottom: 8.0, top: 8.0),
+                      //             focusedBorder: OutlineInputBorder(
+                      //               borderSide: const BorderSide(color: Colors.white),
+                      //               borderRadius: BorderRadius.circular(7.7),
+                      //             ),
+                      //             enabledBorder: UnderlineInputBorder(
+                      //               borderSide: BorderSide(color: Colors.white),
+                      //               borderRadius: BorderRadius.circular(7.7),
+                      //             ),
+                      //           ),
+                      //           // validator: (value) {
+                      //           //   if (value!.isEmpty) {
+                      //           //     return 'Message empty';
+                      //           //   } else if (value.length < 10) {
+                      //           //     return 'Message short';
+                      //           //   }
+
+                      //           //   return null;
+                      //           // },
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      SizedBox(
+                        width: width,
+                        child: const Text("Services",
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.black,
+                                fontWeight: FontWeight.w300)),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      VxBuilder(
+                        mutations: {SelectSev},
+                        builder: (context, _, __) {
+                          return Container(
+                              width: width,
+                              height: 50,
+                              child: ListView.builder(
+                                itemCount: listofSev.length,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: ((context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: InkWell(
+                                      onTap: (() => SelectSev(index, store)),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(6),
+                                          color: store.selectSev == index
+                                              ? Colors.white
+                                              : Color.fromARGB(
+                                                  31, 162, 162, 162),
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: store.selectSev == index
+                                                    ? Colors.blue
+                                                    : Colors.transparent,
+                                                spreadRadius: 1),
+                                          ],
+                                        ),
+                                        height: 30,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            listofSev[index],
+                                            style: const TextStyle(
+                                                color: Colors.black),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }),
+                              ));
+                        },
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Center(
+                          child: InkWell(
+                        onTap: (() {
+                          bool isvalidated = _formKey.currentState!.validate();
+                          if (isvalidated) {
+                            print(listofSev[store.selectSev]);
+                          }
+                        }),
+                        child: Container(
+                          height: 45,
+                          width: 200,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(6),
+                            color: const Color.fromARGB(255, 255, 203, 125),
+                          ),
+                          child: const Center(
+                              child: Text(
+                            'Send Message',
+                            style: TextStyle(color: Colors.white),
+                          )),
+                        ),
+                      ))
+                    ]),
+              ),
             ),
           ),
         ),
@@ -525,28 +532,65 @@ class ContactPageWeb extends StatelessWidget {
                                 ),
                                 Center(
                                     child: InkWell(
-                                  onTap: (() {
-                                    bool isvalidated =
-                                        _formKey.currentState!.validate();
-                                    if (isvalidated) {
-                                      print(listofSev[store.selectSev]);
-                                    }
-                                  }),
-                                  child: Container(
-                                    height: 45,
-                                    width: 200,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(6),
-                                      color: const Color.fromARGB(
-                                          255, 255, 203, 125),
-                                    ),
-                                    child: const Center(
-                                        child: Text(
-                                      'Send Message',
-                                      style: TextStyle(color: Colors.white),
-                                    )),
-                                  ),
-                                ))
+                                        onTap: (() {
+                                          try {
+                                            bool isvalidated = _formKey
+                                                .currentState!
+                                                .validate();
+                                            if (isvalidated) {
+                                              SetIsemail(true);
+                                              print(listofSev[store.selectSev]);
+                                              DownloadController().sendMail(
+                                                  name: namecontroller.text,
+                                                  mnumber: phonecontroller.text,
+                                                  email: emailcontroller.text,
+                                                  sev: listofSev[
+                                                      store.selectSev],
+                                                  msg: msgcontroller.text);
+                                              Future.delayed(
+                                                      Duration(seconds: 3))
+                                                  .then((value) {
+                                                SetIsemail(false);
+                                                context.showToast(
+                                                    msg: 'Message Sent');
+                                              });
+                                            }
+                                          } catch (e) {
+                                            context.showToast(
+                                                msg:
+                                                    'Sometimes wrong, Try again');
+                                          }
+                                        }),
+                                        child: VxBuilder(
+                                            mutations: {SetIsemail},
+                                            builder: (context, _, status) {
+                                              return AnimatedContainer(
+                                                duration:
+                                                    Duration(milliseconds: 700),
+                                                height: 45,
+                                                width: store.isemailsending
+                                                    ? 60
+                                                    : 200,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          store.isemailsending
+                                                              ? 30
+                                                              : 6),
+                                                  color: const Color.fromARGB(
+                                                      255, 255, 203, 125),
+                                                ),
+                                                child: Center(
+                                                    child: store.isemailsending
+                                                        ? const CircularProgressIndicator()
+                                                        : const Text(
+                                                            'Send Message',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white),
+                                                          )),
+                                              );
+                                            })))
                               ],
                             ),
                           ),
@@ -616,7 +660,7 @@ class _MyInputState extends State<MyInput> {
           ),
           Container(
             height: widget.textHeight,
-            child: TextField(
+            child: TextFormField(
               // autofocus: false,
               maxLines: widget.maxline,
               focusNode: fn,
@@ -636,28 +680,28 @@ class _MyInputState extends State<MyInput> {
                   borderRadius: BorderRadius.circular(7.7),
                 ),
               ),
-              // validator: (value) {
-              //   if (widget.text == "Email") {
-              //     final bool emailValid = RegExp(
-              //             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-              //         .hasMatch(value!);
-              //     if (!emailValid) return "Invalid Email";
-              //     return null;
-              //   }
-              //   if (widget.text == 'Phone Number') {
-              //     final bool emailValid =
-              //         RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)').hasMatch(value!);
-              //     if (!emailValid) return "Invalid Number";
-              //     return null;
-              //   }
-              //   if (value!.isEmpty) {
-              //     return '${widget.text} empty';
-              //   } else if (value.length < 3) {
-              //     return '${widget.text} short';
-              //   }
+              validator: (value) {
+                if (widget.text == "Email") {
+                  final bool emailValid = RegExp(
+                          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                      .hasMatch(value!);
+                  if (!emailValid) return "Invalid Email";
+                  return null;
+                }
+                if (widget.text == 'Phone Number') {
+                  final bool emailValid =
+                      RegExp(r'(^(?:[+0]9)?[0-9]{10,12}$)').hasMatch(value!);
+                  if (!emailValid) return "Invalid Number";
+                  return null;
+                }
+                if (value!.isEmpty) {
+                  return '${widget.text} empty';
+                } else if (value.length < 3) {
+                  return '${widget.text} short';
+                }
 
-              //   return null;
-              // },
+                return null;
+              },
             ),
           ),
         ],
@@ -749,9 +793,9 @@ class DevWebPage extends StatelessWidget {
                                       InkWell(
                                         onTap: () {
                                           DownloadController().launchUrls(
-                                              Uri.parse(streamSnapshot
-                                                      .data.docs[index]['cont']
-                                                  ['link']));
+                                              Uri.parse(streamSnapshot.data
+                                                  .docs[index]['cont']['link']),
+                                              -1);
                                         },
                                         child: const FaIcon(
                                           FontAwesomeIcons.linkedinIn,
@@ -765,7 +809,8 @@ class DevWebPage extends StatelessWidget {
                                         onTap: () {
                                           DownloadController().launchUrls(
                                               Uri.parse(streamSnapshot.data
-                                                  .docs[index]['cont']['git']));
+                                                  .docs[index]['cont']['git']),
+                                              -1);
                                         },
                                         child: const FaIcon(
                                           FontAwesomeIcons.github,
@@ -779,7 +824,8 @@ class DevWebPage extends StatelessWidget {
                                         onTap: () {
                                           DownloadController().launchUrls(
                                               Uri.parse(streamSnapshot.data
-                                                  .docs[index]['cont']['twt']));
+                                                  .docs[index]['cont']['twt']),
+                                              -1);
                                         },
                                         child: const FaIcon(
                                           FontAwesomeIcons.twitter,
@@ -793,7 +839,8 @@ class DevWebPage extends StatelessWidget {
                                         onTap: () {
                                           DownloadController().launchUrls(
                                               Uri.parse(streamSnapshot.data
-                                                  .docs[index]['cont']['mid']));
+                                                  .docs[index]['cont']['mid']),
+                                              -1);
                                         },
                                         child: const FaIcon(
                                           FontAwesomeIcons.medium,

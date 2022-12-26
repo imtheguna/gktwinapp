@@ -14,7 +14,9 @@ import './models/firebase_options.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:url_strategy/url_strategy.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
+ScrollController scrollController = ScrollController();
 Future<void> main() async {
   setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
@@ -214,6 +216,7 @@ class BookRouterDelegate extends RouterDelegate<AppRoutePath>
           MaterialPage(
             key: ValueKey('app'),
             child: AppView(
+              onTapped: _handleBookTapped,
               // onTapped: _handleBookTapped,
               app: _selectedApp!,
               //devDetails: _devDetails!,

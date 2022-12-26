@@ -1,149 +1,269 @@
 import 'package:flutter/material.dart';
 import 'package:twin_apps/controller/downloadercontroller.dart';
+import 'package:twin_apps/controller/firebaseMag.dart';
+import 'package:twin_apps/controller/showModalbottomSheet.dart';
 import 'package:twin_apps/models/appdetailmodels.dart';
 import 'package:twin_apps/models/appstore.dart';
+import 'package:twin_apps/pages/applist.dart';
 import 'package:twin_apps/widgets/appbar_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:twin_apps/widgets/applistmoblie.dart';
 
 class AppViewWeb extends StatelessWidget {
+  final ValueChanged<AppDetail> onTapped;
   final AppDetail app;
   final Map<String, dynamic> dev;
   final AppStore store;
   const AppViewWeb(
-      {super.key, required this.app, required this.store, required this.dev});
+      {super.key,
+      required this.app,
+      required this.store,
+      required this.dev,
+      required this.onTapped});
 
   @override
   Widget build(BuildContext context) {
     String disp = app.description.replaceAll('\\n', '\n');
     double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    List<int> list = [13, 14];
     return SingleChildScrollView(
       child: Container(
         child: Column(
           children: [
-            width > 600 ? const AppBarWidget() : const AppBarWidgetPhone(),
+            width > 600
+                ? AppBarWidget(
+                    store: store,
+                  )
+                : AppBarWidgetPhone(
+                    store: store,
+                  ),
             AppDetails(
               app: app,
             ),
             ImageView(
               app: app,
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 50, right: 50),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
+            SizedBox(
+              width: width,
+              // height: 300,
+              child: Row(
                 children: [
-                  SizedBox(
-                    width: width / 2,
-                    child: const Text(
-                      'About this app',
-                      style:
-                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  Expanded(
+                    flex: 3,
+                    //width: width / 2,
+                    //color: Colors.red,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 50, right: 50),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: width / 2,
+                            child: const Text(
+                              'About this app',
+                              style: TextStyle(
+                                  fontSize: 22, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                            width: double.infinity,
+                          ),
+                          SizedBox(
+                            width: width / 2,
+                            child: SelectableText(
+                              disp,
+                              style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black54),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                            width: width / 2,
+                          ),
+                          const Text(
+                            'What\'s new',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            height: 4,
+                            width: width / 2,
+                          ),
+                          SizedBox(
+                            width: width / 2,
+                            child: SelectableText(
+                              app.new_update_details,
+                              style: const TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black54),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 20,
+                            width: width / 2,
+                          ),
+                          SizedBox(
+                            width: width,
+                            height: 30,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: app.tag.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(right: 4),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: Color.fromARGB(
+                                              255, 208, 208, 208)),
+                                      color: Colors.white,
+                                      //  border: BoxBorder.lerp(a, b, t),
+                                      borderRadius: BorderRadius.circular(6.0),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                        top: 4,
+                                        bottom: 4,
+                                        left: 8,
+                                        right: 10,
+                                      ),
+                                      child: Center(
+                                          child: Text(
+                                        app.tag[index],
+                                        style: const TextStyle(
+                                            color: Colors.black38,
+                                            fontSize: 13),
+                                      )),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                            height: 15,
+                            width: width / 2,
+                          ),
+                          Container(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(
+                                  width: double.infinity,
+                                  child: Text(
+                                    'Developer contact',
+                                    style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                  width: double.infinity,
+                                ),
+                                InkWell(
+                                  onTap: () => DownloadController().launchUrls(
+                                      Uri.parse(dev['website']), -1),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10)),
+                                  child: Container(
+                                    width: 450,
+                                    child: ListTile(
+                                      leading:
+                                          const Icon(Icons.wb_cloudy_outlined),
+                                      title: const Text('Website'),
+                                      subtitle: Text(dev['website']),
+                                    ),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () => DownloadController().launchUrls(
+                                      Uri.parse("mailto:" + dev['email']), -1),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10)),
+                                  child: Container(
+                                    width: 450,
+                                    child: ListTile(
+                                      leading: const Icon(Icons.email_outlined),
+                                      title: const Text('Email'),
+                                      subtitle: Text(dev['email']),
+                                    ),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    // DownloadController()
+                                    //     .launchUrls(Uri.parse(dev['policy_link']));
+
+                                    ShowModalBottomSheet().modalBottomSheetMenu(
+                                        context: context,
+                                        height: 450,
+                                        width: width,
+                                        isweb: true,
+                                        t2: dev['Information'],
+                                        t1: dev['Privacy'],
+                                        t3: dev['Contact_de']);
+                                  },
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10)),
+                                  child: Container(
+                                    width: 450,
+                                    child: ListTile(
+                                      leading: const Icon(
+                                          Icons.privacy_tip_outlined),
+                                      title: const Text('Privacy Policy'),
+                                      subtitle: Text(dev['policy_link']),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
-                  const SizedBox(
-                    height: 10,
-                    width: double.infinity,
-                  ),
-                  SizedBox(
-                    width: width / 2,
-                    child: SelectableText(
-                      disp,
-                      style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black54),
+                  Expanded(
+                    flex: 2,
+                    child: Container(
+                      padding: const EdgeInsets.only(
+                          left: 10, right: 10, bottom: 30, top: 30),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'More Apps',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w700),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          SizedBox(
+                              height: list.contains(app.id)
+                                  ? height * 0.95
+                                  : height * 0.6,
+                              width: width / 3,
+                              child: ApplistForMbile(
+                                isSubview: true,
+                                subviewid: app.id,
+                                store: store,
+                                onTapped: onTapped,
+                              ))
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                    width: width / 2,
-                  ),
-                  const Text(
-                    'What\'s new',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(
-                    height: 4,
-                    width: width / 2,
-                  ),
-                  SizedBox(
-                    width: width / 2,
-                    child: SelectableText(
-                      app.new_update_details,
-                      style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black54),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 40,
-                    width: width / 2,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        width: double.infinity,
-                        child: Text(
-                          'Developer contact',
-                          style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                        width: double.infinity,
-                      ),
-                      InkWell(
-                        onTap: () => DownloadController()
-                            .launchUrls(Uri.parse(dev['website'])),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                        child: Container(
-                          width: 450,
-                          child: ListTile(
-                            leading: const Icon(Icons.wb_cloudy_outlined),
-                            title: const Text('Website'),
-                            subtitle: Text(dev['website']),
-                          ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () => DownloadController()
-                            .launchUrls(Uri.parse("mailto:" + dev['email'])),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                        child: Container(
-                          width: 450,
-                          child: ListTile(
-                            leading: const Icon(Icons.email_outlined),
-                            title: const Text('Email'),
-                            subtitle: Text(dev['email']),
-                          ),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () => DownloadController()
-                            .launchUrls(Uri.parse(dev['policy_link'])),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                        child: Container(
-                          width: 450,
-                          child: ListTile(
-                            leading: const Icon(Icons.privacy_tip_outlined),
-                            title: const Text('Privacy Policy'),
-                            subtitle: Text(dev['policy_link']),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  )
                 ],
               ),
             ),
@@ -231,9 +351,33 @@ class ImageView extends StatelessWidget {
   }
 }
 
-class AppDetails extends StatelessWidget {
+class AppDetails extends StatefulWidget {
   const AppDetails({super.key, required this.app});
   final AppDetail app;
+
+  @override
+  State<AppDetails> createState() => _AppDetailsState();
+}
+
+class _AppDetailsState extends State<AppDetails> {
+  int count = 0;
+
+  getcount() {
+    FireStoreDataBase().getCOunt(id: widget.app.id).then(
+      (value) {
+        setState(() {
+          count = value;
+        });
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    getcount();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -261,7 +405,7 @@ class AppDetails extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ExtendedImage.network(
-                            app.logo,
+                            widget.app.logo,
                             enableLoadState: true,
                             fit: BoxFit.contain,
                             cache: true,
@@ -291,7 +435,7 @@ class AppDetails extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        app.name,
+                        widget.app.name,
                         style: const TextStyle(
                           fontSize: 60,
                           color: Colors.black87,
@@ -299,50 +443,22 @@ class AppDetails extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        app.ads == true ? 'Contains ads' : 'No ads',
+                        widget.app.ads == true ? 'Contains ads' : 'No ads',
                         style: const TextStyle(
                           fontSize: 15,
                           color: Colors.black45,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
-                        height: 10,
+                      const SizedBox(
+                        height: 5,
                       ),
-                      SizedBox(
-                        height: 30,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: app.tag.length,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.only(right: 4),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color:
-                                          Color.fromARGB(255, 208, 208, 208)),
-                                  color: Colors.white,
-                                  //  border: BoxBorder.lerp(a, b, t),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                    top: 4,
-                                    bottom: 4,
-                                    left: 8,
-                                    right: 10,
-                                  ),
-                                  child: Center(
-                                      child: Text(
-                                    app.tag[index],
-                                    style: const TextStyle(
-                                        color: Colors.black38, fontSize: 13),
-                                  )),
-                                ),
-                              ),
-                            );
-                          },
+                      Text(
+                        "$count Downloads",
+                        style: const TextStyle(
+                          fontSize: 15,
+                          color: Colors.black26,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                       const SizedBox(
@@ -357,18 +473,25 @@ class AppDetails extends StatelessWidget {
                         height: 50,
                         child: TextButton.icon(
                             onPressed: () {
-                              if (app.source == 'internal') {
-                                DownloadController().downloadFile(app.dowlink);
+                              if (widget.app.source == 'internal') {
+                                DownloadController().downloadFile(
+                                    widget.app.dowlink, widget.app.id);
+                                getcount();
+                                setState(() {});
+                              } else {
+                                DownloadController().launchUrls(
+                                    Uri.parse(widget.app.dowlink),
+                                    widget.app.id);
+                                getcount();
+                                setState(() {});
                               }
-                              DownloadController()
-                                  .launchUrls(Uri.parse(app.dowlink));
                             },
                             icon: const Icon(
                               Icons.download,
                               color: Colors.white,
                             ),
                             label: Text(
-                              "${app.source == 'internal' ? 'Download APK' : 'Download'}  (${app.size})",
+                              "${widget.app.source == 'internal' ? 'Download APK' : 'Download'}  (${widget.app.size})",
                               style: TextStyle(
                                 color: Colors.white,
                               ),
@@ -440,6 +563,7 @@ class _GalleryPhotoViewWrapperState extends State<GalleryPhotoViewWrapper> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Container(
         decoration: widget.backgroundDecoration,
         constraints: BoxConstraints.expand(

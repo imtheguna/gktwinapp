@@ -9,10 +9,15 @@ import 'package:twin_apps/pages/appviewweb.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AppView extends StatefulWidget {
+  final ValueChanged<AppDetail> onTapped;
   final AppDetail app;
 
   final AppStore store;
-  const AppView({super.key, required this.app, required this.store});
+  const AppView(
+      {super.key,
+      required this.app,
+      required this.store,
+      required this.onTapped});
 
   @override
   State<AppView> createState() => _AppViewState();
@@ -37,6 +42,7 @@ class _AppViewState extends State<AppView> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: StreamBuilder(
           stream: FirebaseFirestore.instance
@@ -66,6 +72,7 @@ class _AppViewState extends State<AppView> {
             return width > 1000
                 ? AppViewWeb(
                     dev: dev,
+                    onTapped: widget.onTapped,
                     app: widget.app,
                     store: widget.store,
                   )

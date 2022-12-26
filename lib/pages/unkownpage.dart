@@ -10,7 +10,9 @@ class UnPage extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
 
-    return Scaffold(backgroundColor: Colors.white,
+    return Scaffold(
+        backgroundColor: Colors.white,
+        resizeToAvoidBottomInset: false,
         body: width > 1050
             ? Center(
                 child: Column(

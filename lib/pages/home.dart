@@ -11,6 +11,9 @@ import 'package:twin_apps/pages/apps.dart';
 import 'package:twin_apps/widgets/appbar_widget.dart';
 import 'package:appinio_video_player/appinio_video_player.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+final FirebaseAuth _auth = FirebaseAuth.instance;
 
 class HomePage extends StatefulWidget {
   final AppStore store;
@@ -27,6 +30,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  ScrollController scrollController = ScrollController();
   late CustomVideoPlayerWebSettings customVideoPlayerWebSettings =
       // ignore: prefer_const_constructors
       CustomVideoPlayerWebSettings(
@@ -38,7 +42,11 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-
+    if (_auth.currentUser == null) {
+      FireStoreDataBase().signInAnonymously();
+    } else {
+      print('Current user : ${_auth.currentUser!.uid}');
+    }
     customVideoPlayerWebSettings =
         // ignore: prefer_const_constructors
         CustomVideoPlayerWebSettings(
@@ -62,12 +70,19 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    //FireStoreDataBase().updateDownCount(id: 1);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          width > 600 ? const AppBarWidget() : const AppBarWidgetPhone(),
+          width > 600
+              ? AppBarWidget(
+                  store: widget.store,
+                )
+              : AppBarWidgetPhone(
+                  store: widget.store,
+                ),
           VxBuilder(
             builder: (context, storeX, status) {
               if (widget.store.bodyIndex == 0) {

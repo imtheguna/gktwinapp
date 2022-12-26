@@ -1,5 +1,7 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:twin_apps/controller/firebaseMag.dart';
+import 'package:twin_apps/controller/showModalbottomSheet.dart';
 
 import 'package:twin_apps/widgets/appbar_widget.dart';
 
@@ -18,13 +20,20 @@ class AppViewMobile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ScrollController scrollController = ScrollController();
     double width = MediaQuery.of(context).size.width;
     String disp = app.description.replaceAll('\\n', '\n');
     return SingleChildScrollView(
       child: Container(
         child: Column(
           children: [
-            width > 600 ? const AppBarWidget() : const AppBarWidgetPhone(),
+            width > 600
+                ? AppBarWidget(
+                    store: store,
+                  )
+                : AppBarWidgetPhone(
+                    store: store,
+                  ),
             MobileAppDetails(
               app: app,
               store: store,
@@ -99,7 +108,49 @@ class AppViewMobile extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: 40,
+              height: 13,
+              width: width / 2,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20, right: 5),
+              child: SizedBox(
+                height: 30,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: app.tag.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 4, left: 0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Color.fromARGB(255, 208, 208, 208)),
+                          color: Colors.white,
+                          //  border: BoxBorder.lerp(a, b, t),
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                            top: 4,
+                            bottom: 4,
+                            left: 8,
+                            right: 10,
+                          ),
+                          child: Center(
+                              child: Text(
+                            app.tag[index],
+                            style: const TextStyle(
+                                color: Colors.black38, fontSize: 13),
+                          )),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 13,
               width: width / 2,
             ),
             Padding(
@@ -121,7 +172,7 @@ class AppViewMobile extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () => DownloadController()
-                        .launchUrls(Uri.parse(dev['website'])),
+                        .launchUrls(Uri.parse(dev['website']), -1),
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
                     child: Container(
                       width: 450,
@@ -134,7 +185,7 @@ class AppViewMobile extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: () => DownloadController()
-                        .launchUrls(Uri.parse("mailto:" + dev['email'])),
+                        .launchUrls(Uri.parse("mailto:" + dev['email']), -1),
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
                     child: Container(
                       width: 450,
@@ -146,8 +197,16 @@ class AppViewMobile extends StatelessWidget {
                     ),
                   ),
                   InkWell(
-                    onTap: () => DownloadController()
-                        .launchUrls(Uri.parse(dev['policy_link'])),
+                    onTap: () {
+                      ShowModalBottomSheet().modalBottomSheetMenu(
+                          context: context,
+                          height: 480,
+                          width: width,
+                          isweb: false,
+                          t2: dev['Information'],
+                          t1: dev['Privacy'],
+                          t3: dev['Contact_de']);
+                    },
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
                     child: Container(
                       width: 450,
@@ -168,11 +227,33 @@ class AppViewMobile extends StatelessWidget {
   }
 }
 
-class MobileAppDetails extends StatelessWidget {
+class MobileAppDetails extends StatefulWidget {
   final AppDetail app;
 
   final AppStore store;
   const MobileAppDetails({super.key, required this.app, required this.store});
+
+  @override
+  State<MobileAppDetails> createState() => _MobileAppDetailsState();
+}
+
+class _MobileAppDetailsState extends State<MobileAppDetails> {
+  int count = 0;
+
+  getcount() {
+    FireStoreDataBase().getCOunt(id: widget.app.id).then(
+      (value) {
+        count = value;
+        setState(() {});
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    getcount();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -195,7 +276,7 @@ class MobileAppDetails extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(6.0),
                       child: ExtendedImage.network(
-                        app.logo,
+                        widget.app.logo,
                         enableLoadState: true,
                         fit: BoxFit.contain,
                         cache: true,
@@ -226,14 +307,14 @@ class MobileAppDetails extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    app.name,
+                    widget.app.name,
                     style: const TextStyle(
                       overflow: TextOverflow.ellipsis,
                       fontSize: 20,
                     ),
                   ),
                   Text(
-                    app.ads == true ? 'Contains ads' : 'No ads',
+                    widget.app.ads == true ? 'Contains ads' : 'No ads',
                     style: const TextStyle(
                       fontSize: 14,
                       color: Colors.black45,
@@ -245,7 +326,7 @@ class MobileAppDetails extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.only(top: 2),
                       child: Text(
-                        app.size,
+                        "$count Downloads",
                         style: const TextStyle(
                           fontSize: 14,
                           color: Colors.black45,
@@ -272,18 +353,23 @@ class MobileAppDetails extends StatelessWidget {
             width: double.infinity,
             height: 50,
             child: TextButton.icon(
-                onPressed: () {
-                  if (app.source == 'internal') {
-                    DownloadController().downloadFile(app.dowlink);
+                onPressed: () async {
+                  if (widget.app.source == 'internal') {
+                    DownloadController()
+                        .downloadFile(widget.app.dowlink, widget.app.id);
+                  } else {
+                    DownloadController().launchUrls(
+                        Uri.parse(widget.app.dowlink), widget.app.id);
                   }
-                  DownloadController().launchUrls(Uri.parse(app.dowlink));
+                  getcount();
+                  setState(() {});
                 },
                 icon: const Icon(
                   Icons.download,
                   color: Colors.white,
                 ),
                 label: Text(
-                  "${app.source == 'internal' ? 'Download APK' : 'Download'}  (${app.size})",
+                  "${widget.app.source == 'internal' ? 'Download APK' : 'Download'}  (${widget.app.size})",
                   style: const TextStyle(
                     color: Colors.white,
                   ),

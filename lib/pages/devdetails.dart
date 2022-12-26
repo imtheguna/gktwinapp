@@ -156,11 +156,11 @@ class MobileDev extends StatelessWidget {
                                             children: [
                                               InkWell(
                                                 onTap: () {
-                                                  DownloadController()
-                                                      .launchUrls(Uri.parse(
-                                                          streamSnapshot.data
-                                                                  .docs[index][
-                                                              'cont']['link']));
+                                                  DownloadController().launchUrls(
+                                                      Uri.parse(streamSnapshot
+                                                              .data.docs[index]
+                                                          ['cont']['link']),
+                                                      -1);
                                                 },
                                                 child: const FaIcon(
                                                   FontAwesomeIcons.linkedinIn,
@@ -172,11 +172,11 @@ class MobileDev extends StatelessWidget {
                                               ),
                                               InkWell(
                                                 onTap: () {
-                                                  DownloadController()
-                                                      .launchUrls(Uri.parse(
-                                                          streamSnapshot.data
-                                                                  .docs[index]
-                                                              ['cont']['git']));
+                                                  DownloadController().launchUrls(
+                                                      Uri.parse(streamSnapshot
+                                                              .data.docs[index]
+                                                          ['cont']['git']),
+                                                      -1);
                                                 },
                                                 child: const FaIcon(
                                                   FontAwesomeIcons.github,
@@ -188,11 +188,11 @@ class MobileDev extends StatelessWidget {
                                               ),
                                               InkWell(
                                                 onTap: () {
-                                                  DownloadController()
-                                                      .launchUrls(Uri.parse(
-                                                          streamSnapshot.data
-                                                                  .docs[index]
-                                                              ['cont']['twt']));
+                                                  DownloadController().launchUrls(
+                                                      Uri.parse(streamSnapshot
+                                                              .data.docs[index]
+                                                          ['cont']['twt']),
+                                                      -1);
                                                 },
                                                 child: const FaIcon(
                                                   FontAwesomeIcons.twitter,
@@ -204,11 +204,11 @@ class MobileDev extends StatelessWidget {
                                               ),
                                               InkWell(
                                                 onTap: () {
-                                                  DownloadController()
-                                                      .launchUrls(Uri.parse(
-                                                          streamSnapshot.data
-                                                                  .docs[index]
-                                                              ['cont']['mid']));
+                                                  DownloadController().launchUrls(
+                                                      Uri.parse(streamSnapshot
+                                                              .data.docs[index]
+                                                          ['cont']['mid']),
+                                                      -1);
                                                 },
                                                 child: const FaIcon(
                                                   FontAwesomeIcons.medium,

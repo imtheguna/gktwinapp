@@ -11,6 +11,8 @@ class AppStore extends VxStore {
   Map<int, String> sizelist = {};
   int srcIndex = 0;
   int selectSev = 0;
+  Map<String, double> offset = {};
+  bool isemailsending = false;
   bool showall = false;
   // List<AppDetail> appDetails = [];
   String ProVideoLink =
@@ -24,6 +26,27 @@ class SrcShow extends VxMutation<AppStore> {
   @override
   perform() {
     store!.showall = showall;
+  }
+}
+
+class Setoffset extends VxMutation<AppStore> {
+  final double off;
+  final String view;
+
+  Setoffset(this.off, this.view);
+  @override
+  perform() {
+    store!.offset[view] = off;
+  }
+}
+
+class SetIsemail extends VxMutation<AppStore> {
+  final bool isemailsending;
+
+  SetIsemail(this.isemailsending);
+  @override
+  perform() {
+    store!.isemailsending = isemailsending;
   }
 }
 
